@@ -48,6 +48,7 @@ public class Server {
 				catch(Exception e){
 					s.close();
 					e.printStackTrace();
+
 				}
 			}
 	}
@@ -83,9 +84,15 @@ class ClientHandler implements Runnable {
 					break;
 				}
 				String [] part = received.split("#");
-				String messageToSend = part[0];
-				String recipient = part[1];
+				String messageToSend = "";
+				String recipient = "";
+				try{
+					messageToSend = part[0];
+					recipient = part[1];
+				} 
+				catch(Exception e){
 
+				}
 				for(ClientHandler c : Server.cl){
 					if(c.name.equals(recipient) && c.isLoggedIn == true){
 						c.dos.writeUTF(this.name + " : " + messageToSend);
@@ -93,6 +100,9 @@ class ClientHandler implements Runnable {
 				}
 			}
 			catch(Exception e){
+				if(true){
+					break;
+				}
 				e.printStackTrace();
 			}
 		}
