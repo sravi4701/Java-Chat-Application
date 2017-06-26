@@ -9,6 +9,7 @@ public class Client {
 	public static void main(String[] args) throws IOException{
 			Scanner sc = new Scanner(System.in);
 			try{
+				// Getting the host and port
 				System.out.println("Enter Host Name : ");
 				host = sc.nextLine();
 				System.out.println("Enter Port No. : ");
@@ -17,11 +18,16 @@ public class Client {
 			catch(Exception e){
 				e.printStackTrace();
 			}
+			// Converting host to InetAddress
 			InetAddress ip = InetAddress.getByName("localhost");
+
+			//Creating new Socket
 			Socket s = new Socket(ip, port);
+
 			DataInputStream dis = new DataInputStream(s.getInputStream());
 			DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 
+			// thread to send messages 
 			Thread sendMessage = new Thread(new Runnable() {
 				@Override
 				public void run(){
@@ -37,6 +43,7 @@ public class Client {
 				}
 			});
 
+			// thread to receive messages
 			Thread receiveMessage = new Thread(new Runnable(){
 				@Override
 				public void run(){
@@ -52,6 +59,7 @@ public class Client {
 				}
 			});
 			
+			// start the thread
 			sendMessage.start();
 			receiveMessage.start();
 	}
